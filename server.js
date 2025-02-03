@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
+require('dotenv').config();
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -12,7 +16,9 @@ app.use('/api/tasks', taskRoutes);
 const authRoutes = require('./routes/auths');
 app.use('/api/auth', authRoutes);
 
-mongoose.connect('mongodb+srv://arkeshchoudhury:R54k7jtKhAiSrJjm@cluster0.xz764.mongodb.net/')
+const mongoUri = process.env.MONGODB_URI;
+
+mongoose.connect(mongoUri)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Failed to connect to MongoDB:', err));
 
